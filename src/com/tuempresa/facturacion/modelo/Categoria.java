@@ -12,8 +12,8 @@ import lombok.*;
 public class Categoria {
 	
 	@Id
-	 @Hidden // La propiedad no se muestra al usuario. Es un identificador interno
-	 @GeneratedValue(generator="system-uuid") // Identificador Universal Único (1)
+	 @Hidden 
+	 @GeneratedValue(generator="system-uuid") 
 	 @GenericGenerator(name="system-uuid", strategy = "uuid")
 	 @Column(length=32)
 	 String oid;
