@@ -31,7 +31,9 @@ abstract public class DocumentoComercial extends Identificable {
 	int anyo;
 	
 	@Column(length = 6)
-    // @DefaultValueCalculator(value = CalculadorSiguienteNumeroParaAnyo.class, properties = @PropertyValue(name = "anyo"))
+    //@DefaultValueCalculator(value = CalculadorSiguienteNumeroParaAnyo.class, 
+	//properties = @PropertyValue(name = "anyo")
+	//)
 	@ReadOnly
 	int numero;
 	
@@ -44,15 +46,15 @@ abstract public class DocumentoComercial extends Identificable {
 	Cliente cliente;
 	
 	@ElementCollection
-	@ListProperties("producto.numero, producto.descripcion,cantidad, precioPorUnidad, "
-			+"importe+["
-			+"documentoComercial.porcentajeIVA,"
-			+"documentoComercial.iva,"
-			+"documentoComercial.importeTotal"
-			+"]"
+	@ListProperties("producto.numero, producto.descripcion, cantidad, precioPorUnidad, " +
+			"importe+[" + 
+			"documentoComercial.porcentajeIVA," +
+			"documentoComercial.iva," +
+			"documentoComercial.importeTotal" +
+			"]"
 			
 			)
-	Collection<Detalle> detalles;
+	private Collection<Detalle> detalles;
 	
 	
 	@Stereotype("MEMO")
@@ -65,12 +67,12 @@ abstract public class DocumentoComercial extends Identificable {
 	
 	@ReadOnly
 	@Stereotype("DINERO")
-	@Calculation("sum(detalles.importe) * porcentajeIVA/100")
+	@Calculation("sum(detalles.importe) * porcentajeIVA / 100")
 	BigDecimal iva;
 	
 	@ReadOnly
 	@Stereotype("DINERO")
-	@Calculation("sum(detalles.importe)+iva")
+	@Calculation("sum(detalles.importe) + iva")
 	BigDecimal importeTotal;
 	
 	
@@ -86,7 +88,7 @@ abstract public class DocumentoComercial extends Identificable {
 				
 	}
 	
-	@org.hibernate.annotations.Formula("IMPORTETOTAL*0.10")
+	@org.hibernate.annotations.Formula("IMPORTETOTAL * 0.10")
 	@Setter(AccessLevel.NONE)
 	@Stereotype("DINERO")
 	BigDecimal beneficioEstimado;
